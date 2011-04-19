@@ -1,6 +1,8 @@
 package command;
 
+import controller.TrainController;
+
 public interface Command {
-	public Object execute(String cmd) throws Exception;
+	public void execute(TrainController tc, String cmd) throws Exception;
 
 }

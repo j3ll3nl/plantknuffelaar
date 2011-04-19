@@ -2,7 +2,7 @@ package model;
 
 import java.util.HashSet;
 
-public class Trein {
+public class Train {
 	private String id;
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
 
@@ -11,7 +11,7 @@ public class Trein {
 	 * 
 	 * @param id Trein ID.
 	 */
-	public Trein(String newId) {
+	public Train(String newId) {
 		setId(newId);
 	}
 
