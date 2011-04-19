@@ -1,7 +1,7 @@
 package command;
 
 
-public class Newcommand implements CommandInterface {
+public class Addcommand implements CommandInterface {
 
 	@Override
 	public void execute(String cmd) throws Exception {

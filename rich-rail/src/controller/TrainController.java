@@ -7,16 +7,16 @@ import java.util.Observer;
 import model.Train;
 import model.Wagon;
 
-import command.RichRailCommands;
+import command.Addcommand;
+import command.CommandInterface;
+import command.Delcommand;
+import command.Getcommand;
+import command.Newcommand;
+import command.Remcommand;
 
 public class TrainController extends Observable {
 	private HashSet<Train> trains = new HashSet<Train>();
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
-	private RichRailCommands rrc = null;
-
-	public TrainController() {
-		rrc = new RichRailCommands(this);
-	}
 
 	public void newTrain(String newId) {
 		System.out.println("TrainController.newTrain(" + newId + ")");
@@ -72,7 +72,29 @@ public class TrainController extends Observable {
 	}
 
 	public void parseCommand(String cmd) throws Exception {
-		rrc.execute(this, cmd);
+		if (cmd.equals("")) {
+			throw new Exception("No command is given!");
+		} else {
+			String[] b = cmd.split(" ");
+			if (b[0].equals("new")) { // New command
+				CommandInterface ci = new Newcommand();
+				ci.execute(cmd);
+			} else if (b[0].equals("add")) { // Add command
+				CommandInterface ci = new Addcommand();
+				ci.execute(cmd);
+			} else if (b[0].equals("get")) { // Get command
+				CommandInterface ci = new Getcommand();
+				ci.execute(cmd);
+			} else if (b[0].equals("delete")) { // Delete command
+				CommandInterface ci = new Delcommand();
+				ci.execute(cmd);
+			} else if (b[0].equals("remove")) { // Remove command
+				CommandInterface ci = new Remcommand();
+				ci.execute(cmd);
+			} else {
+				throw new Exception("Command not recognized!");
+			}
+		}
 	}
 
 	private void newUpdate() {
