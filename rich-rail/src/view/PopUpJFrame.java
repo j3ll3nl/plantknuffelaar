@@ -5,7 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import controller.output.Display;
+import controller.output.GraphicDisplay;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or
@@ -16,7 +16,7 @@ public class PopUpJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1602328500536004974L;
 	private JPanel jPanel1;
-	private Display display;
+	private GraphicDisplay display;
 
 	{
 		// Set Look & Feel
@@ -55,7 +55,7 @@ public class PopUpJFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public void setDisplay(Display newDisplay) {
+	public void setDisplay(GraphicDisplay newDisplay) {
 		display = newDisplay;
 		jPanel1.add(display);
 

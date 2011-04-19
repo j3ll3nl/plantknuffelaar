@@ -16,7 +16,8 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import controller.GuiController;
-import controller.output.Display;
+import controller.output.GraphicDisplay;
+import controller.output.TextLog;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or
@@ -31,13 +32,12 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = 5844762997602162584L;
 	public JButton jButtonExecute;
 	public JButton jButtonDuplicate;
-	private JScrollPane jScrollPane1;
 	private JScrollPane jScrollPane2;
+	private JScrollPane jScrollPane1;
 	private JSplitPane jSplitPane1;
 	private JLabel jLabelCmdHistory;
 	private JLabel jLabelLog;
 	private JTextArea jTextAreaLog;
-	private JTextArea jTextAreaCmdHistory;
 	private JPanel jPanel7;
 	private JPanel jPanelUpperPanel;
 	private JTextField jTextFieldCmd;
@@ -46,7 +46,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	private JPanel jPanel4;
 	private JPanel jPanel3;
 	private JPanel jPanelLowerPanel;
-	private GuiController mainController;
+	private GuiController guiController;
 
 	{
 		// Set Look & Feel
@@ -63,9 +63,9 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	 * @param mainController
 	 */
 
-	public RichRailJFrame(GuiController newMainController) {
+	public RichRailJFrame(GuiController newGuiController) {
 		super();
-		mainController = newMainController;
+		guiController = newGuiController;
 	}
 
 	public void initGUI() {
@@ -85,7 +85,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 				{
 					jPanelUpperPanel = new JPanel();
 					jSplitPane1.add(jPanelUpperPanel, JSplitPane.TOP);
-					jPanelUpperPanel.add(new Display());
+					jPanelUpperPanel.add(new GraphicDisplay());
 					BorderLayout jPanel1Layout = new BorderLayout();
 					jPanelUpperPanel.setLayout(jPanel1Layout);
 				}
@@ -113,19 +113,18 @@ public class RichRailJFrame extends javax.swing.JFrame {
 							{
 								jLabelCmdHistory = new JLabel();
 								jPanel3.add(jLabelCmdHistory, BorderLayout.NORTH);
-								jLabelCmdHistory.setText("Command history:");
+								jLabelCmdHistory.setText("Trains and wagons in text:");
 								jLabelCmdHistory.setBorder(BorderFactory.createEmptyBorder(0, 0, 3, 0));
 							}
 							{
 								jScrollPane1 = new JScrollPane();
 								jPanel3.add(jScrollPane1, BorderLayout.CENTER);
-								jScrollPane1.setPreferredSize(new java.awt.Dimension(84, 22));
+
 								{
-									jTextAreaCmdHistory = new JTextArea();
-									jScrollPane1.setViewportView(jTextAreaCmdHistory);
-									jTextAreaCmdHistory.setEditable(false);
-									jTextAreaCmdHistory.setFont(new java.awt.Font("Tahoma", 0, 11));
+									TextLog tl = new TextLog();
+									jScrollPane1.setViewportView(tl);
 								}
+
 							}
 						}
 						{
@@ -137,7 +136,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 							{
 								jLabelLog = new JLabel();
 								jPanel4.add(jLabelLog, BorderLayout.NORTH);
-								jLabelLog.setText("Log:");
+								jLabelLog.setText("Output log:");
 								jLabelLog.setBorder(BorderFactory.createEmptyBorder(0, 0, 3, 0));
 							}
 							{
@@ -173,13 +172,13 @@ public class RichRailJFrame extends javax.swing.JFrame {
 							jButtonExecute = new JButton();
 							jPanel5.add(jButtonExecute);
 							jButtonExecute.setText("Execute");
-							jButtonExecute.addActionListener(mainController);
+							jButtonExecute.addActionListener(guiController);
 						}
 						{
 							jButtonDuplicate = new JButton();
 							jPanel5.add(jButtonDuplicate);
 							jButtonDuplicate.setText("Duplicate display");
-							jButtonDuplicate.addActionListener(mainController);
+							jButtonDuplicate.addActionListener(guiController);
 						}
 					}
 				}
@@ -192,24 +191,24 @@ public class RichRailJFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public void setDefaultDisplay(Display defaultDisplay) {
-		// Clear the panel
-		jPanelUpperPanel.removeAll();
-		jPanelUpperPanel.setPreferredSize(defaultDisplay.getPreferredSize());
-
-		// Add the display
-		jPanelUpperPanel.add(defaultDisplay);
-	}
-
 	public JTextArea getjTextAreaLog() {
 		return jTextAreaLog;
 	}
 
-	public JTextArea getjTextAreaCmdHistory() {
-		return jTextAreaCmdHistory;
-	}
-
 	public JTextField getjTextFieldCmd() {
 		return jTextFieldCmd;
+	}
+
+	public void setGraphicDisplay(GraphicDisplay defaultDisplay) {
+		// Clear the panel
+		jPanelUpperPanel.removeAll();
+		jPanelUpperPanel.setPreferredSize(defaultDisplay.getPreferredSize());
+	
+		// Add the display
+		jPanelUpperPanel.add(defaultDisplay);
+	}
+
+	public void setTextOutput(TextLog textlog) {
+		jScrollPane1.setViewportView(textlog);
 	}
 }

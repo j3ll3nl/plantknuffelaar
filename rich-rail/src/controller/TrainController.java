@@ -2,13 +2,13 @@ package controller;
 
 import java.util.HashSet;
 import java.util.Observable;
-import java.util.Observer;
 
 import model.Train;
 import model.Wagon;
 
 import command.Addcommand;
 import command.CommandInterface;
+import command.CommandResult;
 import command.Delcommand;
 import command.Getcommand;
 import command.Newcommand;
@@ -17,11 +17,13 @@ import command.Remcommand;
 public class TrainController extends Observable {
 	private HashSet<Train> trains = new HashSet<Train>();
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
-
-	public void newTrain(String newId) {
-		System.out.println("TrainController.newTrain(" + newId + ")");
-		Train newTrain = new Train(newId);
-		trains.add(newTrain);
+	
+	public HashSet<Train> getTrains(){
+		return trains;
+	}
+	
+	public HashSet<Wagon> getWagons(){
+		return wagons;
 	}
 
 	public Train getTrain(String id) {
@@ -31,21 +33,6 @@ public class TrainController extends Observable {
 			}
 		}
 		return null;
-	}
-
-	public HashSet<Train> getAllTrains() {
-		return trains;
-	}
-
-	public void newWagon(String newId) {
-		newWagon(newId, 20);
-	}
-
-	public void newWagon(String newId, int newNumseats) {
-		System.out.println("TrainController.newWagon(" + newId + ", " + newNumseats + ")");
-
-		Wagon newWagon = new Wagon(newId, newNumseats);
-		wagons.add(newWagon);
 	}
 
 	public Wagon getWagon(String id) {
@@ -63,48 +50,55 @@ public class TrainController extends Observable {
 		return null;
 	}
 
-	public void removeWagon(String id) {
 
-	}
 
-	public void deleteWagon(String id) {
 
-	}
 
-	public void parseCommand(String cmd) throws Exception {
-		if (cmd.equals("")) {
+	public String parseCommand(String cmd) throws Exception {
+		if (cmd.trim().equals("")) {
 			throw new Exception("No command is given!");
-		} else {
-			String[] b = cmd.split(" ");
-			if (b[0].equals("new")) { // New command
+		} else {		
+			CommandResult result;
+			
+			// Opsplitsen van de commando string
+			String[] cmdArray = cmd.split(" ");			
+			if (cmdArray[0].equals("new")) {
+				System.out.println("TrainController.parseCommand(" + cmd + ") : new");
 				CommandInterface ci = new Newcommand();
-				ci.execute(cmd);
-			} else if (b[0].equals("add")) { // Add command
+				result = ci.execute(cmdArray);
+			} else if (cmdArray[0].equals("add")) {
+				System.out.println("TrainController.parseCommand(" + cmd + ") : add");
 				CommandInterface ci = new Addcommand();
-				ci.execute(cmd);
-			} else if (b[0].equals("get")) { // Get command
+				result = ci.execute(cmdArray);
+			} else if (cmdArray[0].startsWith("get")) {
+				System.out.println("TrainController.parseCommand(" + cmd + ") : get");
 				CommandInterface ci = new Getcommand();
-				ci.execute(cmd);
-			} else if (b[0].equals("delete")) { // Delete command
+				result = ci.execute(cmdArray);
+			} else if (cmdArray[0].equals("delete")) {
+				System.out.println("TrainController.parseCommand(" + cmd + ") : delete");
 				CommandInterface ci = new Delcommand();
-				ci.execute(cmd);
-			} else if (b[0].equals("remove")) { // Remove command
+				result = ci.execute(cmdArray);
+			} else if (cmdArray[0].equals("remove")) {
+				System.out.println("TrainController.parseCommand(" + cmd + ") : remove");
 				CommandInterface ci = new Remcommand();
-				ci.execute(cmd);
+				result = ci.execute(cmdArray);
 			} else {
-				throw new Exception("Command not recognized!");
+				throw new Exception("Command cannot be resolved!");
 			}
+
+			/*
+			 * De code komt niet hier als er een fout/exception is gethrowed vanuit de commandinterface. We kunnen dus gewoon doorgaan zonder iets te controleren.
+			 */
+			if(result.getObject() instanceof Train){
+				trains.add((Train) result.getObject());
+			}else{
+				wagons.add((Wagon) result.getObject());
+			}
+			
+			setChanged();
+			notifyObservers(this);
+			
+			return result.getMessage();			
 		}
-	}
-
-	private void newUpdate() {
-		setChanged();
-		notifyObservers(getAllTrains());
-	}
-
-	@Override
-	public void addObserver(Observer o) {
-		super.addObserver(o);
-		newUpdate();
 	}
 }

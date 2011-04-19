@@ -1,7 +1,6 @@
 package command;
 
-
 public interface CommandInterface {
-	public void execute(String cmd) throws Exception;
+	public CommandResult execute(String[] cmd) throws Exception;
 
 }

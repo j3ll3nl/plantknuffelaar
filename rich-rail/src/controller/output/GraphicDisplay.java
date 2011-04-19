@@ -10,15 +10,16 @@ import java.util.Observer;
 import javax.swing.JPanel;
 
 import model.Train;
+import controller.TrainController;
 
-public class Display extends JPanel implements Observer {
+public class GraphicDisplay extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1973301688261315362L;
 	private int currentTrain;
 	private int offset = 200;
 	private HashSet<Train> trains;
 
-	public Display() {
+	public GraphicDisplay() {
 		super();
 		setBackground(Color.WHITE);
 		setPreferredSize(new java.awt.Dimension(784, 220));
@@ -26,17 +27,17 @@ public class Display extends JPanel implements Observer {
 		setLayout(jPanel6Layout);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println("Display.update(" + o + ", " + arg + ")");
+		System.out.println("GraphicDisplay.update(" + o + ", " + arg + ")");
 
-		if (arg instanceof HashSet) {
-			trains = (HashSet<Train>) arg;
+		if (arg instanceof TrainController) {
+			trains = ((TrainController) arg).getTrains();
 			repaint();
 		}
 	}
 
+	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -57,7 +58,6 @@ public class Display extends JPanel implements Observer {
 				g.drawString(train.getId(), 40, 105 + currentTrain * offset);
 
 				currentTrain++;
-
 			}
 		}
 	}
