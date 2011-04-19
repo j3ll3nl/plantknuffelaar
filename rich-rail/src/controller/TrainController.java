@@ -1,22 +1,31 @@
 package controller;
 
 import java.util.HashSet;
+import java.util.Observable;
+import java.util.Observer;
 
-import model.Trein;
+import model.Train;
 import model.Wagon;
 
-public class TrainController {
-	private HashSet<Trein> trains = new HashSet<Trein>();
+import command.RichRailCommands;
+
+public class TrainController extends Observable {
+	private HashSet<Train> trains = new HashSet<Train>();
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
+	private RichRailCommands rrc = null;
+
+	public TrainController() {
+		rrc = new RichRailCommands(this);
+	}
 
 	public void newTrain(String newId) {
 		System.out.println("TrainController.newTrain(" + newId + ")");
-		Trein newTrain = new Trein(newId);
+		Train newTrain = new Train(newId);
 		trains.add(newTrain);
 	}
 
-	public Trein getTrain(String id) {
-		for (Trein train : trains) {
+	public Train getTrain(String id) {
+		for (Train train : trains) {
 			if (train.getId().equals(id)) {
 				return train;
 			}
@@ -24,7 +33,7 @@ public class TrainController {
 		return null;
 	}
 
-	public HashSet<Trein> getTrains() {
+	public HashSet<Train> getAllTrains() {
 		return trains;
 	}
 
@@ -46,11 +55,34 @@ public class TrainController {
 			}
 		}
 
-		for (Trein train : trains) {
+		for (Train train : trains) {
 			if (train.getWagon(id) != null) {
 				return train.getWagon(id);
 			}
 		}
 		return null;
+	}
+
+	public void removeWagon(String id) {
+
+	}
+
+	public void deleteWagon(String id) {
+
+	}
+
+	public void parseCommand(String cmd) throws Exception {
+		rrc.execute(this, cmd);
+	}
+
+	private void newUpdate() {
+		setChanged();
+		notifyObservers(getAllTrains());
+	}
+
+	@Override
+	public void addObserver(Observer o) {
+		super.addObserver(o);
+		newUpdate();
 	}
 }

@@ -9,14 +9,14 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
-import model.Trein;
+import model.Train;
 
 public class Display extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1973301688261315362L;
 	private int currentTrain;
 	private int offset = 200;
-	private HashSet<Trein> trains;
+	private HashSet<Train> trains;
 
 	public Display() {
 		super();
@@ -32,7 +32,7 @@ public class Display extends JPanel implements Observer {
 		System.out.println("Display.update(" + o + ", " + arg + ")");
 
 		if (arg instanceof HashSet) {
-			trains = (HashSet<Trein>) arg;
+			trains = (HashSet<Train>) arg;
 			repaint();
 		}
 	}
@@ -44,7 +44,7 @@ public class Display extends JPanel implements Observer {
 
 		if (trains != null) {
 			removeAll();
-			for (Trein train : trains) {
+			for (Train train : trains) {
 				// Draw the train
 				g.setColor(Color.LIGHT_GRAY);
 				g.fillRect(30, 80 + currentTrain * offset, 80, 40);

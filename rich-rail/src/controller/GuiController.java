@@ -2,7 +2,6 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Observable;
 
 import javax.swing.JOptionPane;
 
@@ -10,7 +9,7 @@ import view.PopUpJFrame;
 import view.RichRailJFrame;
 import controller.output.Display;
 
-public class GuiController extends Observable implements ActionListener {
+public class GuiController implements ActionListener {
 	private RichRailJFrame jframe;
 	private TrainController tc;
 
@@ -20,7 +19,8 @@ public class GuiController extends Observable implements ActionListener {
 
 		// Create the default display for the gui
 		Display defaultDisplay = new Display();
-		addObserver(defaultDisplay);
+
+		tc.addObserver(defaultDisplay);
 
 		// Start the GUI
 		jframe.initGUI();
@@ -43,75 +43,74 @@ public class GuiController extends Observable implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == jframe.jButtonExecute) {
-			System.out.println("MainController.actionPerformed() - Execute");
+			System.out.println("GuiController.actionPerformed() - Execute command");
 
 			String cmd = jframe.getjTextFieldCmd().getText();
-
-			if (cmd.equals("")) {
-				JOptionPane.showMessageDialog(jframe, "No command is given!", "Error", JOptionPane.ERROR_MESSAGE);
-				setLog("error", "no command is given");
-			} else {
-				try {
-					// Split the string from white spaces
-					String[] b = cmd.split(" ");
-					if (b[0].equals("new")) {
-						// New command
-						if (b[1].equals("train")) {
-							// New train
-							tc.newTrain(b[2]);
-							setLog("info", "train " + b[2] + " created");
-						} else if (b[1].equals("wagon")) {
-							// Check if there is an parameter for numseats
-							if (b.length == 3) {
-								// Create standard wagon with 20 seats
-								tc.newWagon(b[2]);
-								setLog("info", "wagon " + b[2] + " created with 20 seats");
-							} else {
-								if (b[3].equals("numseats")) {
-									throw new Exception();
-								} else {
-									// Create wagon with custom seats
-									tc.newWagon(b[2], Integer.parseInt(b[4]));
-									setLog("info", "wagon " + b[2] + " created with " + b[4] + " seats");
-								}
-							}
-						}
-					} else if (b[0].equals("add")) {
-						// Add command
-					} else if (b[0].equals("getnumseats")) {
-						// Get command
-					} else if (b[0].equals("delete")) {
-						// Delete command
-					} else if (b[0].equals("remove")) {
-						// Remove command
-					} else {
-						throw new Exception();
-					}
-					setCmdHistory(cmd);
-
-					newUpdate();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(jframe, "Invalid command!", "Error", JOptionPane.WARNING_MESSAGE);
-					setLog("error", "invalid command");
-				}
+			try {
+				tc.parseCommand(cmd);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (arg0.getSource() == jframe.jButtonDuplicate) {
-			System.out.println("MainController.actionPerformed() - Duplicate view");
+			System.out.println("GuiController.actionPerformed() - Duplicate view");
 
 			PopUpJFrame popup = new PopUpJFrame();
 			Display newDisplay = new Display();
-			addObserver(newDisplay);
+			tc.addObserver(newDisplay);
 
 			// Start the GUI
 			popup.initGUI();
 			popup.setDisplay(newDisplay);
+		}
+	}
+	
+	public void test(){
+		String cmd = "";
+		if (cmd.equals("")) {
+			JOptionPane.showMessageDialog(jframe, "No command is given!", "Error", JOptionPane.ERROR_MESSAGE);
+			setLog("error", "no command is given");
+		} else {
+			try {
+				// Split the string from white spaces
+				String[] b = cmd.split(" ");
+				if (b[0].equals("new")) {
+					// New command
+					if (b[1].equals("train")) {
+						// New train
+						tc.newTrain(b[2]);
+						setLog("info", "train " + b[2] + " created");
+					} else if (b[1].equals("wagon")) { // Check if there is an parameter for numseats
+						if (b.length == 3) { // Create standard wagon with 20 seats
+							tc.newWagon(b[2]);
+						}
+						setLog("info", "wagon " + b[2] + " created with 20 seats");
+					} else {
+						if (b[3].equals("numseats")) {
+							throw new Exception();
+						} else { // Create wagon with custom seats
+							tc.newWagon(b[2], Integer.parseInt(b[4]));
+							setLog("info", "wagon " + b[2] + " created with " + b[4] + " seats");
+						}
+					}
 
-			newUpdate();
+				} else if (b[0].equals("add")) { // Add command
+
+				} else if (b[0].equals("getnumseats")) { // Get command
+
+				} else if (b[0].equals("delete")) { // Delete command
+
+				} else if (b[0].equals("remove")) { // Remove command
+
+				} else {
+					throw new Exception();
+				}
+				setCmdHistory(cmd);
+
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(jframe, "Invalid command!", "Error", JOptionPane.WARNING_MESSAGE);
+				setLog("error", "invalid command");
+			}
 		}
 	}
 
-	private void newUpdate() {
-		setChanged();
-		notifyObservers(tc.getTrains());
-	}
 }
