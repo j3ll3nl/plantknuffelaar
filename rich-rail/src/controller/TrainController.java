@@ -17,51 +17,23 @@ import command.Remcommand;
 public class TrainController extends Observable {
 	private HashSet<Train> trains = new HashSet<Train>();
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
-	
-	public HashSet<Train> getTrains(){
+
+	public HashSet<Train> getTrains() {
 		return trains;
 	}
-	
-	public HashSet<Wagon> getWagons(){
+
+	public HashSet<Wagon> getWagons() {
 		return wagons;
 	}
-
-	public Train getTrain(String id) {
-		for (Train train : trains) {
-			if (train.getId().equals(id)) {
-				return train;
-			}
-		}
-		return null;
-	}
-
-	public Wagon getWagon(String id) {
-		for (Wagon wagon : wagons) {
-			if (wagon.getId().equals(id)) {
-				return wagon;
-			}
-		}
-
-		for (Train train : trains) {
-			if (train.getWagon(id) != null) {
-				return train.getWagon(id);
-			}
-		}
-		return null;
-	}
-
-
-
-
 
 	public String parseCommand(String cmd) throws Exception {
 		if (cmd.trim().equals("")) {
 			throw new Exception("No command is given!");
-		} else {		
+		} else {
 			CommandResult result;
-			
+
 			// Opsplitsen van de commando string
-			String[] cmdArray = cmd.split(" ");			
+			String[] cmdArray = cmd.split(" ");
 			if (cmdArray[0].equals("new")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : new");
 				CommandInterface ci = new Newcommand();
@@ -89,16 +61,16 @@ public class TrainController extends Observable {
 			/*
 			 * De code komt niet hier als er een fout/exception is gethrowed vanuit de commandinterface. We kunnen dus gewoon doorgaan zonder iets te controleren.
 			 */
-			if(result.getObject() instanceof Train){
+			if (result.getObject() instanceof Train) {
 				trains.add((Train) result.getObject());
-			}else{
+			} else {
 				wagons.add((Wagon) result.getObject());
 			}
-			
+
 			setChanged();
 			notifyObservers(this);
-			
-			return result.getMessage();			
+
+			return result.getMessage();
 		}
 	}
 }
