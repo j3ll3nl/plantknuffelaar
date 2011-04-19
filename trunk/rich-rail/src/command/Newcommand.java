@@ -37,12 +37,12 @@ public class Newcommand implements CommandInterface {
 			cresult.setMessage("wagon " + cmd[2] + " created with 20 seats");
 			cresult.setObject(wagon);
 		} else {
-			if (!cmd[3].equals("numseats") || !cmd[4].trim().equals("")) {
-				throw new Exception("Give number of seats for the wagon");
-			} else {
+			if (cmd[3].equals("numseats") && !cmd[4].trim().equals("")) {
 				Wagon wagon = new Wagon(cmd[2], Integer.parseInt(cmd[4]));
 				cresult.setMessage("wagon " + cmd[2] + " created with " + cmd[4] + " seats");
 				cresult.setObject(wagon);
+			} else {
+				throw new Exception("Give number of seats for the wagon");
 			}
 		}
 	}
