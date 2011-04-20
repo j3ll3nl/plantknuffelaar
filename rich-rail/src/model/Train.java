@@ -7,18 +7,19 @@ public class Train {
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
 
 	/**
-	 * Constructor voor het aanmaken van een nieuwe trein.
+	 * Contructor for this class.
 	 * 
-	 * @param id Trein ID.
+	 * @param id Train ID.
 	 */
 	public Train(String newId) {
 		setId(newId);
 	}
 
 	/**
-	 * Geeft het aantal zitplaatsen terug in deze trein door alle zitplaatsen in de gekoppelde wagons te tellen.
+	 * Get the number of seats in this train. This methods loops trough all available wagons.
 	 * 
-	 * @return Het aantal zitplaatsen.
+	 * 
+	 * @return The number of seats.
 	 */
 	public int getNumSeats() {
 		int seats = 0;
@@ -29,19 +30,19 @@ public class Train {
 	}
 
 	/**
-	 * Voeg een wagon toe aan de trein.
+	 * Add a wagon to this train.
 	 * 
-	 * @param newWagon De nieuwe wagon.
+	 * @param newWagon The new wagon to be added.
 	 */
 	public void addWagon(Wagon newWagon) {
 		wagons.add(newWagon);
 	}
 
 	/**
-	 * Geef de wagon uit deze trein met als ID het meegegeven ID.
+	 * Get the wagon with the same given wagon id.
 	 * 
-	 * @param id ID van de wagon.
-	 * @return Null of de gevonden wagon.
+	 * @param id ID of the wagon.
+	 * @return Null if no wagon is found or the wagon itself.
 	 */
 	public Wagon getWagon(String id) {
 		for (Wagon wagon : wagons) {
@@ -53,18 +54,18 @@ public class Train {
 	}
 
 	/**
-	 * Geef de wagons van deze trein.
+	 * Get all wagons in this train.
 	 * 
-	 * @return Alle wagons van deze trein.
+	 * @return HashSet<Wagon> All the wagons.
 	 */
 	public HashSet<Wagon> getWagons() {
 		return wagons;
 	}
 
 	/**
-	 * Verwijder de wagon van de trein. De wagon wordt vernietigd en is niet meer herbruikbaar.
+	 * Delte the given wagon from the train.
 	 * 
-	 * @param id ID van de wagon.
+	 * @param id ID of the wagon.
 	 */
 	public void deleteWagon(String id) {
 		for (Wagon wagon : wagons) {
@@ -75,10 +76,10 @@ public class Train {
 	}
 
 	/**
-	 * Verwijder de wagon van de trein maar geef deze terug.
+	 * Remove the wagon from the train and give it back to the caller.
 	 * 
-	 * @param id ID van de wagon.
-	 * @return Null of de gevonden wagon.
+	 * @param id ID of the wagon.
+	 * @return Null if no wagon is found, or the found wagon.
 	 */
 	public Wagon removeWagon(String id) {
 		for (Wagon wagon : wagons) {
@@ -91,18 +92,18 @@ public class Train {
 	}
 
 	/**
-	 * Zet de nieuwe ID voor deze trein.
+	 * Set the wagon id.
 	 * 
-	 * @param newId De ID van de trein.
+	 * @param newId The id of the wagon
 	 */
 	private void setId(String newId) {
 		id = newId;
 	}
 
 	/**
-	 * Geeft de ID van deze trein.
+	 * Get the train id..
 	 * 
-	 * @return De ID van deze trein.
+	 * @return The id of the train.
 	 */
 	public String getId() {
 		return id;

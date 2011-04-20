@@ -21,7 +21,7 @@ public class PopUpJFrame extends javax.swing.JFrame {
 	{
 		// Set Look & Feel
 		try {
-			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
+			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -165,7 +165,8 @@ public class RichRailJFrame extends javax.swing.JFrame {
 						}
 						{
 							jTextFieldCmd = new JTextField(50);
-							jTextFieldCmd.setText("new train b");
+							jTextFieldCmd.setText("new train b");							
+							jTextFieldCmd.addKeyListener(guiController);				
 							jPanel5.add(jTextFieldCmd);
 						}
 						{
@@ -182,7 +183,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 						}
 					}
 				}
-			}
+			}			
 			pack();
 			this.setSize(800, 600);
 		} catch (Exception e) {
@@ -203,7 +204,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 		// Clear the panel
 		jPanelUpperPanel.removeAll();
 		jPanelUpperPanel.setPreferredSize(defaultDisplay.getPreferredSize());
-	
+
 		// Add the display
 		jPanelUpperPanel.add(defaultDisplay);
 	}
