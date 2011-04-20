@@ -1,8 +1,8 @@
 package controller;
 
-import java.util.HashSet;
 import java.util.Observable;
 
+import model.Depot;
 import model.Train;
 import model.Wagon;
 
@@ -15,25 +15,11 @@ import command.Newcommand;
 import command.Remcommand;
 
 public class TrainController extends Observable {
-	private HashSet<Train> trains = new HashSet<Train>();
-	private HashSet<Wagon> wagons = new HashSet<Wagon>();
 
-	/**
-	 * Get all created trains
-	 * 
-	 * @return HashSet<Train> with trains
-	 */
-	public HashSet<Train> getTrains() {
-		return trains;
-	}
+	private Depot dm;
 
-	/**
-	 * Get all created wagons
-	 * 
-	 * @return HashSet<Wagon> with wagons
-	 */
-	public HashSet<Wagon> getWagons() {
-		return wagons;
+	public TrainController() {
+		dm = new Depot();
 	}
 
 	/**
@@ -50,27 +36,37 @@ public class TrainController extends Observable {
 			CommandResult result;
 
 			// Split the command from whitespaces.
-			String[] cmdArray = cmd.split(" ");
+			String[] cmdSplit = cmd.trim().split(" ");
+			String[] cmdArray = new String[20];
+			for (int i = 0; i < cmdSplit.length; i++) {
+				cmdArray[i] = cmdSplit[i];
+			}
+			for (int i = 0; i < cmdArray.length; i++) {
+				if(cmdArray[i] == null){
+					cmdArray[i] = "";
+				}				
+			}
+
 			// Test if the command starts with any of the available commands. Throws an exception if the command cannot be executed.
 			if (cmdArray[0].equals("new")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : new");
-				CommandInterface ci = new Newcommand();
+				CommandInterface ci = new Newcommand(dm);
 				result = ci.execute(cmdArray);
 			} else if (cmdArray[0].equals("add")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : add");
-				CommandInterface ci = new Addcommand();
+				CommandInterface ci = new Addcommand(dm);
 				result = ci.execute(cmdArray);
 			} else if (cmdArray[0].startsWith("get")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : get");
-				CommandInterface ci = new Getcommand();
+				CommandInterface ci = new Getcommand(dm);
 				result = ci.execute(cmdArray);
 			} else if (cmdArray[0].equals("delete")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : delete");
-				CommandInterface ci = new Delcommand();
+				CommandInterface ci = new Delcommand(dm);
 				result = ci.execute(cmdArray);
 			} else if (cmdArray[0].equals("remove")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : remove");
-				CommandInterface ci = new Remcommand();
+				CommandInterface ci = new Remcommand(dm);
 				result = ci.execute(cmdArray);
 			} else {
 				// The exception that the command cannot be resolved
@@ -81,10 +77,9 @@ public class TrainController extends Observable {
 
 			// Test if the result object is a train
 			if (result.getObject() instanceof Train) {
-				trains.add((Train) result.getObject());
+				dm.addTrain((Train) result.getObject());
 			} else {
-				// Test if the result object is a wagon
-				wagons.add((Wagon) result.getObject());
+				dm.addWagon((Wagon) result.getObject());
 			}
 			// Notify observers that there is a change
 			stateChanged();
@@ -98,6 +93,6 @@ public class TrainController extends Observable {
 	 */
 	public void stateChanged() {
 		setChanged();
-		notifyObservers(this);
+		notifyObservers(dm);
 	}
 }

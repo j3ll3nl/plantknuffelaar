@@ -9,8 +9,8 @@ import java.util.Observer;
 
 import javax.swing.JPanel;
 
+import model.Depot;
 import model.Train;
-import controller.TrainController;
 
 public class GraphicDisplay extends JPanel implements Observer {
 
@@ -31,8 +31,8 @@ public class GraphicDisplay extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		System.out.println("GraphicDisplay.update(" + o + ", " + arg + ")");
 
-		if (arg instanceof TrainController) {
-			trains = ((TrainController) arg).getTrains();
+		if (arg instanceof Depot) {
+			trains = ((Depot) arg).getTrains();
 			repaint();
 		}
 	}

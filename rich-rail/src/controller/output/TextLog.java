@@ -6,10 +6,9 @@ import java.util.Observer;
 
 import javax.swing.JTextArea;
 
+import model.Depot;
 import model.Train;
 import model.Wagon;
-
-import controller.TrainController;
 
 public class TextLog extends JTextArea implements Observer {
 
@@ -27,9 +26,9 @@ public class TextLog extends JTextArea implements Observer {
 	public void update(Observable o, Object arg) {
 		System.out.println("TextLog.update(" + o + ", " + arg + ")");
 
-		if (arg instanceof TrainController) {
-			trains = ((TrainController) arg).getTrains();
-			wagons = ((TrainController) arg).getWagons();
+		if (arg instanceof Depot) {
+			trains = ((Depot) arg).getTrains();
+			wagons = ((Depot) arg).getWagons();
 
 			StringBuffer sb = new StringBuffer("");
 
