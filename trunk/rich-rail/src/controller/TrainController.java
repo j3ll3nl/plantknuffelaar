@@ -18,22 +18,40 @@ public class TrainController extends Observable {
 	private HashSet<Train> trains = new HashSet<Train>();
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
 
+	/**
+	 * Get all created trains
+	 * 
+	 * @return HashSet<Train> with trains
+	 */
 	public HashSet<Train> getTrains() {
 		return trains;
 	}
 
+	/**
+	 * Get all created wagons
+	 * 
+	 * @return HashSet<Wagon> with wagons
+	 */
 	public HashSet<Wagon> getWagons() {
 		return wagons;
 	}
 
+	/**
+	 * Method that will parse the command and send it to the right class that will handle the command.
+	 * 
+	 * @param cmd The command
+	 * @return Result message
+	 * @throws Exception Any errors that occure
+	 */
 	public String parseCommand(String cmd) throws Exception {
 		if (cmd.trim().equals("")) {
 			throw new Exception("No command is given!");
 		} else {
 			CommandResult result;
 
-			// Opsplitsen van de commando string
+			// Split the command from whitespaces.
 			String[] cmdArray = cmd.split(" ");
+			// Test if the command starts with any of the available commands. Throws an exception if the command cannot be executed.
 			if (cmdArray[0].equals("new")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : new");
 				CommandInterface ci = new Newcommand();
@@ -55,22 +73,31 @@ public class TrainController extends Observable {
 				CommandInterface ci = new Remcommand();
 				result = ci.execute(cmdArray);
 			} else {
+				// The exception that the command cannot be resolved
 				throw new Exception("Command cannot be resolved!");
 			}
 
-			/*
-			 * De code komt niet hier als er een fout/exception is gethrowed vanuit de commandinterface. We kunnen dus gewoon doorgaan zonder iets te controleren.
-			 */
+			// We continue if there was not an exception
+
+			// Test if the result object is a train
 			if (result.getObject() instanceof Train) {
 				trains.add((Train) result.getObject());
 			} else {
+				// Test if the result object is a wagon
 				wagons.add((Wagon) result.getObject());
 			}
-
-			setChanged();
-			notifyObservers(this);
-
+			// Notify observers that there is a change
+			stateChanged();
+			// Return the result message
 			return result.getMessage();
 		}
+	}
+
+	/**
+	 * This method notifies the observers that there is an change.
+	 */
+	public void stateChanged() {
+		setChanged();
+		notifyObservers(this);
 	}
 }
