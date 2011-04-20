@@ -165,8 +165,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 						}
 						{
 							jTextFieldCmd = new JTextField(50);
-							jTextFieldCmd.setText("new train b");							
-							jTextFieldCmd.addKeyListener(guiController);				
+							jTextFieldCmd.setText("new train b");
 							jPanel5.add(jTextFieldCmd);
 						}
 						{
@@ -183,7 +182,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 						}
 					}
 				}
-			}			
+			}
 			pack();
 			this.setSize(800, 600);
 		} catch (Exception e) {
