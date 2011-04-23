@@ -60,7 +60,11 @@ public class Depot {
 		return null;
 	}
 
-	public void removeWagonFromDepot(Wagon w) {
+	public void deleteWagonFromDepot(Wagon w) {
 		wagons.remove(w);
+	}
+
+	public void deleteTrainFromDepot(Train t) {
+		trains.remove(t);
 	}
 }

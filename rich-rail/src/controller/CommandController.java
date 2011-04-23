@@ -13,12 +13,12 @@ import controller.command.Getcommand;
 import controller.command.Newcommand;
 import controller.command.Remcommand;
 
-public class TrainController extends Observable {
+public class CommandController extends Observable {
 
 	private Depot dm;
 	private CommandInterface ci;
 
-	public TrainController() {
+	public CommandController() {
 		dm = new Depot();
 	}
 

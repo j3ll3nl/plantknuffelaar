@@ -10,18 +10,18 @@ import view.RichRailJFrame;
 import controller.output.GraphicDisplay;
 import controller.output.TextLog;
 
-public class GuiController implements ActionListener {
+public class UiController implements ActionListener {
 	private RichRailJFrame jframe;
-	private TrainController tc;
+	private CommandController tc;
 
 	/**
 	 * GuiController controller.
 	 */
-	public GuiController() {
+	public UiController() {
 		// Create new jframe
 		jframe = new RichRailJFrame(this);
 		// Create the traincontroller
-		tc = new TrainController();
+		tc = new CommandController();
 
 		// Create the default display for the gui
 		GraphicDisplay graphicDisplay = new GraphicDisplay();
@@ -37,7 +37,7 @@ public class GuiController implements ActionListener {
 		// Set the outputs
 		jframe.setGraphicDisplay(graphicDisplay);
 		jframe.setTextOutput(textlog);
-		
+
 		// TODO weghalen, dit is ene test:
 		try {
 			tc.parseCommand("new train tr1");
@@ -45,7 +45,7 @@ public class GuiController implements ActionListener {
 			tc.parseCommand("new wagon wg1");
 			tc.parseCommand("new wagon wg2");
 			tc.parseCommand("new wagon wg3");
-			
+
 			tc.parseCommand("add wg1 to tr1");
 			tc.parseCommand("add wg2 to tr1");
 			tc.parseCommand("add wg3 to tr1");
@@ -59,15 +59,13 @@ public class GuiController implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == jframe.jButtonExecute) {
 			System.out.println("GuiController.actionPerformed() - Execute command");
-			
+
 			String cmd = jframe.getjTextFieldCmd().getText();
 			try {
 				String resultMessage = tc.parseCommand(cmd);
-
-				StringBuffer sb = new StringBuffer(jframe.getjTextAreaLog().getText());
-				sb.append(resultMessage + "\n");
-				jframe.getjTextAreaLog().setText(sb.toString());
+				appendToOutputLog(resultMessage);
 			} catch (Exception e) {
+				appendToOutputLog(e.getMessage());
 				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (arg0.getSource() == jframe.jButtonDuplicate) {
@@ -88,5 +86,11 @@ public class GuiController implements ActionListener {
 			// Perform an update from observerable
 			tc.stateChanged();
 		}
+	}
+
+	public void appendToOutputLog(String message) {
+		StringBuffer sb = new StringBuffer(jframe.getjTextAreaLog().getText());
+		sb.append(message + "\n");
+		jframe.getjTextAreaLog().setText(sb.toString());
 	}
 }
