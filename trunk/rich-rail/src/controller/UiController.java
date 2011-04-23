@@ -55,6 +55,12 @@ public class UiController implements ActionListener {
 		}
 	}
 
+	public void appendToOutputLog(String message) {
+		StringBuffer sb = new StringBuffer(jframe.getjTextAreaLog().getText());
+		sb.append(message + "\n");
+		jframe.getjTextAreaLog().setText(sb.toString());
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == jframe.jButtonExecute || arg0.getSource() == jframe.jTextFieldCmd) {
@@ -88,11 +94,5 @@ public class UiController implements ActionListener {
 			// Perform an update from observerable
 			tc.stateChanged();
 		}
-	}
-
-	public void appendToOutputLog(String message) {
-		StringBuffer sb = new StringBuffer(jframe.getjTextAreaLog().getText());
-		sb.append(message + "\n");
-		jframe.getjTextAreaLog().setText(sb.toString());
 	}
 }
