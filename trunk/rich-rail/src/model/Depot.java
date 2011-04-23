@@ -41,7 +41,7 @@ public class Depot {
 	public void addWagon(Wagon wagon) {
 		wagons.add(wagon);
 	}
-	
+
 	public Train getTrain(String id) {
 		for (Train train : trains) {
 			if (train.getId().equals(id)) {
@@ -57,12 +57,10 @@ public class Depot {
 				return wagon;
 			}
 		}
-
-		for (Train train : trains) {
-			if (train.getWagon(id) != null) {
-				return train.getWagon(id);
-			}
-		}
 		return null;
-	}	
+	}
+
+	public void removeWagonFromDepot(Wagon w) {
+		wagons.remove(w);
+	}
 }

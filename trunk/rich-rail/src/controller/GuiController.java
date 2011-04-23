@@ -37,6 +37,22 @@ public class GuiController implements ActionListener {
 		// Set the outputs
 		jframe.setGraphicDisplay(graphicDisplay);
 		jframe.setTextOutput(textlog);
+		
+		// TODO weghalen, dit is ene test:
+		try {
+			tc.parseCommand("new train tr1");
+			tc.parseCommand("new train tr2");
+			tc.parseCommand("new wagon wg1");
+			tc.parseCommand("new wagon wg2");
+			tc.parseCommand("new wagon wg3");
+			
+			tc.parseCommand("add wg1 to tr1");
+			tc.parseCommand("add wg2 to tr1");
+			tc.parseCommand("add wg3 to tr1");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

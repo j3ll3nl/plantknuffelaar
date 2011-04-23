@@ -1,4 +1,4 @@
-package command;
+package controller.command;
 
 public class CommandResult {
 	public Object object;

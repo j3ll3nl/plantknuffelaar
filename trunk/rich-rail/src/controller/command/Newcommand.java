@@ -1,4 +1,4 @@
-package command;
+package controller.command;
 
 import model.Depot;
 import model.Train;
@@ -20,8 +20,8 @@ public class Newcommand implements CommandInterface {
 			newTrain(cmd);
 		} else if (cmd[1].equals("wagon")) {
 			newWagon(cmd);
-		} else{
-			throw new Exception("Seccond parameter is not ");
+		} else {
+			throw new Exception("Unknown type given");
 		}
 		return cresult;
 	}
