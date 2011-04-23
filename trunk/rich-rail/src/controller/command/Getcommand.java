@@ -22,7 +22,7 @@ public class Getcommand implements CommandInterface {
 		} else if (cmd[1].equals("wagon")) {
 			getWagonSeats(cmd);
 		} else {
-			throw new Exception("Unknown type given");
+			throw new Exception("unknown type given");
 		}
 		return cresult;
 	}
@@ -31,13 +31,13 @@ public class Getcommand implements CommandInterface {
 		System.out.println("Getcommand.getTrainSeats(" + cmd + ")");
 
 		if (cmd[2].trim().equals("")) {
-			throw new Exception("No train ID given!");
+			throw new Exception("no train ID given!");
 		} else {
 			Train train = dm.getTrain(cmd[2]);
 			if (train == null) {
-				throw new Exception("Train does not exist");
+				throw new Exception("train " + cmd[2] + "\" does not exist");
 			} else {
-				cresult.setMessage("number of seats in train " + cmd[2] + ": " + train.getNumSeats());
+				cresult.setMessage("number of seats in train \"" + cmd[2] + "\": " + train.getNumSeats());
 			}
 		}
 
@@ -47,7 +47,7 @@ public class Getcommand implements CommandInterface {
 		System.out.println("Getcommand.getWagonSeats(" + cmd + ")");
 
 		if (cmd[2].trim().equals("")) {
-			throw new Exception("No wagon ID given!");
+			throw new Exception("no wagon ID given!");
 		} else {
 			boolean wagonFound = false;
 
@@ -56,7 +56,7 @@ public class Getcommand implements CommandInterface {
 			if (wagons != null) {
 				for (Wagon wagon : wagons) {
 					if (wagon.getId().equals(cmd[2])) {
-						cresult.setMessage("number of seats in wagon " + cmd[2] + ": " + wagon.getNumSeats());
+						cresult.setMessage("number of seats in wagon \"" + cmd[2] + "\": " + wagon.getNumSeats());
 						wagonFound = true;
 					}
 				}
@@ -68,7 +68,7 @@ public class Getcommand implements CommandInterface {
 					for (Train train : trains) {
 						Wagon wagon = train.getWagon(cmd[2]);
 						if (wagon != null) {
-							cresult.setMessage("number of seats in wagon " + cmd[2] + ": " + wagon.getNumSeats());
+							cresult.setMessage("number of seats in wagon \"" + cmd[2] + "\": " + wagon.getNumSeats());
 							wagonFound = true;
 						}
 					}
@@ -76,7 +76,7 @@ public class Getcommand implements CommandInterface {
 			}
 
 			if (!wagonFound) {
-				throw new Exception("Wagon does not exist");
+				throw new Exception("wagon \"" + cmd[2] + "\" does not exist");
 			}
 		}
 	}

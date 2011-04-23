@@ -22,7 +22,7 @@ public class Delcommand implements CommandInterface {
 		} else if (cmd[1].equals("wagon")) {
 			deleteWagon(cmd);
 		} else {
-			throw new Exception("Unknown type given");
+			throw new Exception("unknown type given");
 		}
 		return cresult;
 	}
@@ -31,14 +31,14 @@ public class Delcommand implements CommandInterface {
 		System.out.println("Delcommand.deleteTrain(" + cmd + ")");
 
 		if (cmd[2].trim().equals("")) {
-			throw new Exception("No train ID given!");
+			throw new Exception("no train ID given!");
 		} else {
 			Train train = dm.getTrain(cmd[2]);
 			if (train == null) {
-				throw new Exception("Train does not exist");
+				throw new Exception("train \"" + cmd[2] + "\" does not exist");
 			} else {
 				dm.deleteTrainFromDepot(train);
-				cresult.setMessage("train " + cmd[2] + " deleted");
+				cresult.setMessage("train \"" + cmd[2] + "\" deleted");
 			}
 		}
 	}
@@ -47,7 +47,7 @@ public class Delcommand implements CommandInterface {
 		System.out.println("Delcommand.deleteWagon(" + cmd + ")");
 
 		if (cmd[2].trim().equals("")) {
-			throw new Exception("No wagon ID given!");
+			throw new Exception("no wagon ID given!");
 		} else {
 			boolean wagonFound = false;
 
@@ -56,6 +56,7 @@ public class Delcommand implements CommandInterface {
 			if (wagons != null) {
 				for (Wagon wagon : wagons) {
 					if (wagon.getId().equals(cmd[2])) {
+						cresult.setMessage("wagon \"" + cmd[2] + "\" deleted");
 						dm.deleteWagonFromDepot(wagon);
 						wagonFound = true;
 					}
@@ -68,6 +69,7 @@ public class Delcommand implements CommandInterface {
 					for (Train train : trains) {
 						Wagon wagon = train.getWagon(cmd[2]);
 						if (wagon != null) {
+							cresult.setMessage("wagon \"" + cmd[2] + "\" deleted from train \"" + train.getId() + "\"");
 							train.deleteWagon(wagon);
 							wagonFound = true;
 						}
@@ -76,7 +78,7 @@ public class Delcommand implements CommandInterface {
 			}
 
 			if (!wagonFound) {
-				throw new Exception("Wagon does not exist");
+				throw new Exception("wagon \"" + cmd[2] + "\" does not exist");
 			}
 		}
 	}

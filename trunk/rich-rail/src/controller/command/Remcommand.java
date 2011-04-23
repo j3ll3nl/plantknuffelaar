@@ -23,29 +23,29 @@ public class Remcommand implements CommandInterface {
 		System.out.println("Remcommand.removeIdfromId(" + cmd + ")");
 
 		if (cmd[1].trim().equals("")) {
-			throw new Exception("No wagon ID given!");
+			throw new Exception("no wagon ID given!");
 		} else if (!cmd[2].trim().equals("from")) {
-			throw new Exception("Invallid command!");
+			throw new Exception("invallid command!");
 		} else if (cmd[3].trim().equals("")) {
-			throw new Exception("No train ID given!");
+			throw new Exception("no train ID given!");
 		} else {
 			Train t = dm.getTrain(cmd[3]);
 
 			if (t == null) {
-				throw new Exception("Train does not exist!");
+				throw new Exception("train \"" + cmd[3] + "\" does not exist!");
 			} else {
 				Wagon w = t.getWagon(cmd[1]);
-				
-				if(w == null){
-					throw new Exception("Wagon does not exists in train");	
-				}else{
+
+				if (w == null) {
+					throw new Exception("wagon \"" + cmd[1] + "\" does not exists in train");
+				} else {
 					t.deleteWagon(w);
 					dm.addWagon(w);
-					
-					cresult.setMessage("wagon " + cmd[1] + " removed from train " + cmd[3]);
+
+					cresult.setMessage("wagon \"" + cmd[1] + "\" removed from train \"" + cmd[3] + "\"");
 				}
 			}
-		}		
+		}
 	}
 
 }
