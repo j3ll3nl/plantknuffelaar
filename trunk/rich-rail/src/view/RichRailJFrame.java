@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import controller.GuiController;
+import controller.UiController;
 import controller.output.GraphicDisplay;
 import controller.output.TextLog;
 
@@ -46,7 +46,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	private JPanel jPanel4;
 	private JPanel jPanel3;
 	private JPanel jPanelLowerPanel;
-	private GuiController guiController;
+	private UiController guiController;
 
 	{
 		// Set Look & Feel
@@ -63,7 +63,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	 * @param mainController
 	 */
 
-	public RichRailJFrame(GuiController newGuiController) {
+	public RichRailJFrame(UiController newGuiController) {
 		super();
 		guiController = newGuiController;
 	}

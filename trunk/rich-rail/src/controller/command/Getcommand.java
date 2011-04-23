@@ -39,7 +39,6 @@ public class Getcommand implements CommandInterface {
 			} else {
 				cresult.setMessage("number of seats in train " + cmd[2] + ": " + train.getNumSeats());
 			}
-			cresult.setObject(null);
 		}
 
 	}
@@ -79,7 +78,6 @@ public class Getcommand implements CommandInterface {
 			if (!wagonFound) {
 				throw new Exception("Wagon does not exist");
 			}
-			cresult.setObject(null);
 		}
 	}
 

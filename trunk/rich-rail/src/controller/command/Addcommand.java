@@ -36,10 +36,9 @@ public class Addcommand implements CommandInterface {
 				throw new Exception("Train or Wagon ID does not exist or is already connected!");
 			} else {
 				t.addWagon(w);
-				dm.removeWagonFromDepot(w);
-				
+				dm.deleteWagonFromDepot(w);
+
 				cresult.setMessage("wagon " + cmd[1] + " added to train " + cmd[3]);
-				cresult.setObject(null);
 			}
 		}
 	}

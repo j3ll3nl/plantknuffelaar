@@ -67,28 +67,8 @@ public class Train {
 	 * 
 	 * @param id ID of the wagon.
 	 */
-	public void deleteWagon(String id) {
-		for (Wagon wagon : wagons) {
-			if (wagon.getId().equals(id)) {
-				wagons.remove(wagon);
-			}
-		}
-	}
-
-	/**
-	 * Remove the wagon from the train and give it back to the caller.
-	 * 
-	 * @param id ID of the wagon.
-	 * @return Null if no wagon is found, or the found wagon.
-	 */
-	public Wagon removeWagon(String id) {
-		for (Wagon wagon : wagons) {
-			if (wagon.getId().equals(id)) {
-				wagons.remove(wagon);
-				return wagon;
-			}
-		}
-		return null;
+	public void deleteWagon(Wagon wagon) {
+		wagons.remove(wagon);
 	}
 
 	/**

@@ -1,7 +1,7 @@
 package controller.command;
 
 public class CommandResult {
-	public Object object;
+	public Object object = null;
 	public String message;
 
 	/**
