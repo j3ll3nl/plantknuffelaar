@@ -31,7 +31,6 @@ public class TextLog extends JTextArea implements Observer {
 			wagons = ((Depot) arg).getWagons();
 
 			StringBuffer sb = new StringBuffer("");
-
 			if (wagons != null && !wagons.isEmpty()) {
 				sb.append("wagons\n");
 				for (Wagon wagon : wagons) {

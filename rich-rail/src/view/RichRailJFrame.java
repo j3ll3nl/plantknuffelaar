@@ -165,7 +165,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 						}
 						{
 							jTextFieldCmd = new JTextField(50);
-							jTextFieldCmd.setText("new train b");
+							jTextFieldCmd.setText("add wg1 to tr1");
 							jPanel5.add(jTextFieldCmd);
 						}
 						{

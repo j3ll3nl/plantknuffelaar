@@ -5,18 +5,18 @@ import java.util.Observable;
 import model.Depot;
 import model.Train;
 import model.Wagon;
-
-import command.Addcommand;
-import command.CommandInterface;
-import command.CommandResult;
-import command.Delcommand;
-import command.Getcommand;
-import command.Newcommand;
-import command.Remcommand;
+import controller.command.Addcommand;
+import controller.command.CommandInterface;
+import controller.command.CommandResult;
+import controller.command.Delcommand;
+import controller.command.Getcommand;
+import controller.command.Newcommand;
+import controller.command.Remcommand;
 
 public class TrainController extends Observable {
 
 	private Depot dm;
+	private CommandInterface ci;
 
 	public TrainController() {
 		dm = new Depot();
@@ -33,56 +33,51 @@ public class TrainController extends Observable {
 		if (cmd.trim().equals("")) {
 			throw new Exception("No command is given!");
 		} else {
-			CommandResult result;
-
 			// Split the command from whitespaces.
 			String[] cmdSplit = cmd.trim().split(" ");
+
 			String[] cmdArray = new String[20];
 			for (int i = 0; i < cmdSplit.length; i++) {
 				cmdArray[i] = cmdSplit[i];
 			}
 			for (int i = 0; i < cmdArray.length; i++) {
-				if(cmdArray[i] == null){
+				if (cmdArray[i] == null) {
 					cmdArray[i] = "";
-				}				
+				}
 			}
 
 			// Test if the command starts with any of the available commands. Throws an exception if the command cannot be executed.
 			if (cmdArray[0].equals("new")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : new");
-				CommandInterface ci = new Newcommand(dm);
-				result = ci.execute(cmdArray);
+				ci = new Newcommand(dm);
 			} else if (cmdArray[0].equals("add")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : add");
-				CommandInterface ci = new Addcommand(dm);
-				result = ci.execute(cmdArray);
+				ci = new Addcommand(dm);
 			} else if (cmdArray[0].startsWith("get")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : get");
-				CommandInterface ci = new Getcommand(dm);
-				result = ci.execute(cmdArray);
+				ci = new Getcommand(dm);
 			} else if (cmdArray[0].equals("delete")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : delete");
-				CommandInterface ci = new Delcommand(dm);
-				result = ci.execute(cmdArray);
+				ci = new Delcommand(dm);
 			} else if (cmdArray[0].equals("remove")) {
 				System.out.println("TrainController.parseCommand(" + cmd + ") : remove");
-				CommandInterface ci = new Remcommand(dm);
-				result = ci.execute(cmdArray);
+				ci = new Remcommand(dm);
 			} else {
 				// The exception that the command cannot be resolved
 				throw new Exception("Command cannot be resolved!");
 			}
 
-			// We continue if there was not an exception
+			CommandResult result = ci.execute(cmdArray);
 
 			// Test if the result object is a train
 			if (result.getObject() instanceof Train) {
 				dm.addTrain((Train) result.getObject());
-			} else {
+			} else if (result.getObject() instanceof Wagon) {
 				dm.addWagon((Wagon) result.getObject());
 			}
 			// Notify observers that there is a change
 			stateChanged();
+
 			// Return the result message
 			return result.getMessage();
 		}

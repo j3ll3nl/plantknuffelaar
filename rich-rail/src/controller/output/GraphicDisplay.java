@@ -11,13 +11,17 @@ import javax.swing.JPanel;
 
 import model.Depot;
 import model.Train;
+import model.Wagon;
 
 public class GraphicDisplay extends JPanel implements Observer {
 
 	private static final long serialVersionUID = 1973301688261315362L;
 	private int currentTrain;
-	private int offset = 200;
+	private int currentNumberOfWagons;
+	private int TRAINLENGTH = 100;
+	private int offset = 160;
 	private HashSet<Train> trains;
+	private HashSet<Wagon> wagons;
 
 	public GraphicDisplay() {
 		super();
@@ -41,10 +45,10 @@ public class GraphicDisplay extends JPanel implements Observer {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		currentTrain = 0;
+		removeAll();
 
 		if (trains != null) {
-			removeAll();
+			currentTrain = 0;
 			for (Train train : trains) {
 				// Draw the train
 				g.setColor(Color.LIGHT_GRAY);
@@ -57,6 +61,21 @@ public class GraphicDisplay extends JPanel implements Observer {
 				g.fillRoundRect(80, 120 + currentTrain * offset, 20, 20, 20, 20);
 				g.drawString(train.getId(), 40, 105 + currentTrain * offset);
 
+				// Draw the wagons for this train
+				wagons = train.getWagons();
+				if (wagons != null) {
+					currentNumberOfWagons = 1;
+					for (Wagon wagon : wagons) {
+						g.setColor(Color.LIGHT_GRAY);
+						g.fillRect(30 + currentNumberOfWagons * TRAINLENGTH, 80 + currentTrain * offset, 80, 40);
+						g.setColor(Color.BLACK);
+						g.fillRoundRect(35 + currentNumberOfWagons * TRAINLENGTH, 120 + currentTrain * offset, 20, 20, 20, 20);
+						g.fillRoundRect(80 + currentNumberOfWagons * TRAINLENGTH, 120 + currentTrain * offset, 20, 20, 20, 20);
+						g.drawString(wagon.getId(), 40 + currentNumberOfWagons * TRAINLENGTH, 105 + currentTrain * offset);
+
+						currentNumberOfWagons++;
+					}
+				}
 				currentTrain++;
 			}
 		}
