@@ -57,13 +57,15 @@ public class UiController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == jframe.jButtonExecute) {
+		if (arg0.getSource() == jframe.jButtonExecute || arg0.getSource() == jframe.jTextFieldCmd) {
 			System.out.println("GuiController.actionPerformed() - Execute command");
 
 			String cmd = jframe.getjTextFieldCmd().getText();
 			try {
 				String resultMessage = tc.parseCommand(cmd);
 				appendToOutputLog(resultMessage);
+
+				jframe.getjTextFieldCmd().setText("");
 			} catch (Exception e) {
 				appendToOutputLog(e.getMessage());
 				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

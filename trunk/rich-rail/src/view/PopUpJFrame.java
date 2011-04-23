@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -40,6 +41,8 @@ public class PopUpJFrame extends javax.swing.JFrame {
 	public void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			setTitle("Rich Rail - duplicate view");
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("train.gif")).getImage());
 			pack();
 			setVisible(true);
 			{
@@ -48,7 +51,7 @@ public class PopUpJFrame extends javax.swing.JFrame {
 				jPanel1.setLayout(jPanel1Layout);
 				getContentPane().add(jPanel1, BorderLayout.CENTER);
 			}
-			setSize(400, 300);
+			setSize(800, 600);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();

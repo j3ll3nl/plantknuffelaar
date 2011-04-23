@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -40,13 +41,13 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	private JTextArea jTextAreaLog;
 	private JPanel jPanel7;
 	private JPanel jPanelUpperPanel;
-	private JTextField jTextFieldCmd;
+	public JTextField jTextFieldCmd;
 	private JLabel jLabel1;
 	private JPanel jPanel5;
 	private JPanel jPanel4;
 	private JPanel jPanel3;
 	private JPanel jPanelLowerPanel;
-	private UiController guiController;
+	private UiController uiController;
 
 	{
 		// Set Look & Feel
@@ -65,7 +66,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 
 	public RichRailJFrame(UiController newGuiController) {
 		super();
-		guiController = newGuiController;
+		uiController = newGuiController;
 	}
 
 	public void initGUI() {
@@ -74,14 +75,15 @@ public class RichRailJFrame extends javax.swing.JFrame {
 			BorderLayout thisLayout = new BorderLayout();
 			getContentPane().setLayout(thisLayout);
 			setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-			this.setTitle("RichRail - v1.0");
+			setIconImage(new ImageIcon(getClass().getClassLoader().getResource("train.gif")).getImage());
+			setTitle("Rich Rail");
 
 			{
 				jSplitPane1 = new JSplitPane();
 				getContentPane().add(jSplitPane1, BorderLayout.CENTER);
 				jSplitPane1.setPreferredSize(new java.awt.Dimension(784, 342));
 				jSplitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
-				jSplitPane1.setDividerLocation(200);
+				jSplitPane1.setDividerLocation(500);
 				{
 					jPanelUpperPanel = new JPanel();
 					jSplitPane1.add(jPanelUpperPanel, JSplitPane.TOP);
@@ -113,7 +115,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 							{
 								jLabelCmdHistory = new JLabel();
 								jPanel3.add(jLabelCmdHistory, BorderLayout.NORTH);
-								jLabelCmdHistory.setText("Trains and wagons in text:");
+								jLabelCmdHistory.setText("Current trains and wagons:");
 								jLabelCmdHistory.setBorder(BorderFactory.createEmptyBorder(0, 0, 3, 0));
 							}
 							{
@@ -165,26 +167,29 @@ public class RichRailJFrame extends javax.swing.JFrame {
 						}
 						{
 							jTextFieldCmd = new JTextField(50);
-							jTextFieldCmd.setText("add wg1 to tr1");
+							jTextFieldCmd.addActionListener(uiController);
 							jPanel5.add(jTextFieldCmd);
 						}
 						{
 							jButtonExecute = new JButton();
 							jPanel5.add(jButtonExecute);
 							jButtonExecute.setText("Execute");
-							jButtonExecute.addActionListener(guiController);
+							jButtonExecute.addActionListener(uiController);
 						}
 						{
 							jButtonDuplicate = new JButton();
 							jPanel5.add(jButtonDuplicate);
 							jButtonDuplicate.setText("Duplicate display");
-							jButtonDuplicate.addActionListener(guiController);
+							jButtonDuplicate.addActionListener(uiController);
 						}
 					}
 				}
 			}
+
+			jTextFieldCmd.requestFocusInWindow();
+
 			pack();
-			this.setSize(800, 600);
+			this.setSize(1000, 800);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
