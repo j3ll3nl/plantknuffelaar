@@ -1,5 +1,7 @@
 package controller.command;
 
+import java.util.HashSet;
+
 import model.Depot;
 import model.Train;
 import model.Wagon;
@@ -50,6 +52,15 @@ public class Newcommand implements CommandInterface {
 			if (dm.getWagon(cmd[2]) != null) {
 				throw new Exception("wagon ID \"" + cmd[2] + "\" already exists");
 			} else {
+				HashSet<Train> trains = dm.getTrains();
+				if (trains != null) {
+					for (Train train : trains) {
+						if (train.getWagon(cmd[2]) != null) {
+							throw new Exception("wagon ID \"" + cmd[2] + "\" already exists");
+						}
+					}
+				}
+
 				if (!cmd[3].equals("numseats")) { // Create standard wagon with 20 seats
 					Wagon wagon = new Wagon(cmd[2], 20);
 					cresult.setMessage("wagon \"" + cmd[2] + "\" created with 20 seats");
