@@ -2,8 +2,6 @@ package controller;
 
 import java.util.Observable;
 
-import view.PopUpJFrame;
-
 import model.Depot;
 import model.Train;
 import model.Wagon;
