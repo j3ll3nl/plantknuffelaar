@@ -3,8 +3,6 @@ package controller.command;
 import view.PopUpJFrame;
 import controller.output.GraphicDisplay;
 import controller.output.TextLog;
-import model.Depot;
-import model.Train;
 
 public class Displaycommand implements CommandInterface{
 	private CommandResult cresult = new CommandResult();
