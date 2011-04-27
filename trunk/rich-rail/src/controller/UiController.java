@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
-
-import view.PopUpJFrame;
 import view.RichRailJFrame;
 import controller.output.GraphicDisplay;
 import controller.output.TextLog;
