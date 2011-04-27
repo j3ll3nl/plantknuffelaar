@@ -7,8 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import controller.output.GraphicDisplay;
-
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or
  * business for any purpose whatever) then you should purchase a license for each developer using Jigloo. Please visit www.cloudgarden.com for details. Use of Jigloo implies acceptance of these
