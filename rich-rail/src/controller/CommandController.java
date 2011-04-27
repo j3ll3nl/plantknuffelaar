@@ -1,6 +1,9 @@
 package controller;
 
 import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JPanel;
 
 import model.Depot;
 import model.Train;
@@ -84,12 +87,9 @@ public class CommandController extends Observable {
 				dm.addTrain((Train) result.getObject());
 			} else if (result.getObject() instanceof Wagon) {
 				dm.addWagon((Wagon) result.getObject());
-			} else if(result.getObject() instanceof GraphicDisplay){
+			} else if(result.getObject() instanceof Observer){
 				// Register display at commandcontroller
-				this.addObserver((GraphicDisplay) result.getObject());
-			} else if(result.getObject() instanceof TextLog){
-				// Register display at commandcontroller
-				this.addObserver((TextLog) result.getObject());
+				this.addObserver((Observer) result.getObject());
 			}
 			// Notify observers that there is a change
 			stateChanged();
