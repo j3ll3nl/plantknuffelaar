@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -17,7 +18,7 @@ public class PopUpJFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1602328500536004974L;
 	private JPanel jPanel1;
-	private GraphicDisplay display;
+	private Component display;
 
 	{
 		// Set Look & Feel
@@ -58,8 +59,8 @@ public class PopUpJFrame extends javax.swing.JFrame {
 		}
 	}
 
-	public void setDisplay(GraphicDisplay newDisplay) {
-		display = newDisplay;
+	public void setDisplay(Object newDisplay) {
+		display = (Component) newDisplay;
 		jPanel1.add(display);
 
 	}
