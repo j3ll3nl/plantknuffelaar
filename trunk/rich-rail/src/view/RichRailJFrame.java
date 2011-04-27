@@ -32,8 +32,9 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	 */
 	private static final long serialVersionUID = 5844762997602162584L;
 	public JButton jButtonExecute;
-	public JButton jButtonDuplicate;
+	public JButton jButtonDuplicateGraphic;
 	private JScrollPane jScrollPane2;
+	public JButton jButtonDuplicateText;
 	private JScrollPane jScrollPane1;
 	private JSplitPane jSplitPane1;
 	private JLabel jLabelCmdHistory;
@@ -177,10 +178,16 @@ public class RichRailJFrame extends javax.swing.JFrame {
 							jButtonExecute.addActionListener(uiController);
 						}
 						{
-							jButtonDuplicate = new JButton();
-							jPanel5.add(jButtonDuplicate);
-							jButtonDuplicate.setText("Duplicate display");
-							jButtonDuplicate.addActionListener(uiController);
+							jButtonDuplicateGraphic = new JButton();
+							jPanel5.add(jButtonDuplicateGraphic);
+							jButtonDuplicateGraphic.setText("Duplicate graphicdisplay");
+							jButtonDuplicateGraphic.addActionListener(uiController);
+						}
+						{
+							jButtonDuplicateText = new JButton();
+							jPanel5.add(jButtonDuplicateText);
+							jButtonDuplicateText.setText("Duplicate textdisplay");
+							jButtonDuplicateText.addActionListener(uiController);
 						}
 					}
 				}
