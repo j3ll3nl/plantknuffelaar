@@ -74,14 +74,24 @@ public class UiController implements ActionListener {
 				appendToOutputLog(e.getMessage());
 				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		} else if (arg0.getSource() == jframe.jButtonDuplicate) {
-			System.out.println("GuiController.actionPerformed() - Duplicate view");
+		} else if (arg0.getSource() == jframe.jButtonDuplicateGraphic) {
+			System.out.println("GuiController.actionPerformed() - Duplicate graphic view");
 			try {
-			cc.parseCommand("display graphicdisplay");
+				cc.parseCommand("display graphicdisplay");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				appendToOutputLog(e.getMessage());
+				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 			}
+		} else if (arg0.getSource() == jframe.jButtonDuplicateText) {
+			System.out.println("GuiController.actionPerformed() - Duplicate text view");
+			try {
+				cc.parseCommand("display textlog");
+			} catch (Exception e) {
+				appendToOutputLog(e.getMessage());
+				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		} else {
+			System.out.println("GuiController.actionPerformed() - Unknown button is pressed");
 		}
 	}
 }
