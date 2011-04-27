@@ -2,6 +2,8 @@ package controller;
 
 import java.util.Observable;
 
+import view.PopUpJFrame;
+
 import model.Depot;
 import model.Train;
 import model.Wagon;
@@ -9,9 +11,12 @@ import controller.command.Addcommand;
 import controller.command.CommandInterface;
 import controller.command.CommandResult;
 import controller.command.Delcommand;
+import controller.command.Displaycommand;
 import controller.command.Getcommand;
 import controller.command.Newcommand;
 import controller.command.Remcommand;
+import controller.output.GraphicDisplay;
+import controller.output.TextLog;
 
 public class CommandController extends Observable {
 
@@ -48,20 +53,27 @@ public class CommandController extends Observable {
 
 			// Test if the command starts with any of the available commands. Throws an exception if the command cannot be executed.
 			if (cmdArray[0].equals("new")) {
-				System.out.println("TrainController.parseCommand(" + cmd + ") : new");
+				System.out.println("CommandController.parseCommand(" + cmd + ") : new");
 				ci = new Newcommand(dm);
 			} else if (cmdArray[0].equals("add")) {
-				System.out.println("TrainController.parseCommand(" + cmd + ") : add");
+				System.out.println("CommandController.parseCommand(" + cmd + ") : add");
 				ci = new Addcommand(dm);
 			} else if (cmdArray[0].startsWith("get")) {
-				System.out.println("TrainController.parseCommand(" + cmd + ") : get");
+				System.out.println("CommandController.parseCommand(" + cmd + ") : get");
 				ci = new Getcommand(dm);
 			} else if (cmdArray[0].equals("delete")) {
-				System.out.println("TrainController.parseCommand(" + cmd + ") : delete");
+				System.out.println("CommandController.parseCommand(" + cmd + ") : delete");
 				ci = new Delcommand(dm);
 			} else if (cmdArray[0].equals("remove")) {
-				System.out.println("TrainController.parseCommand(" + cmd + ") : remove");
+				System.out.println("CommandController.parseCommand(" + cmd + ") : remove");
 				ci = new Remcommand(dm);
+			} else if (cmdArray[0].equals("display")) {
+				System.out.println("CommandController.parseCommand(" + cmd + ") : display");
+				
+				System.out.println("GuiController.actionPerformed() - Duplicate display");
+				
+				ci = new Displaycommand();
+			
 			} else {
 				// The exception that the command cannot be resolved
 				throw new Exception("Command cannot be resolved!");
@@ -69,11 +81,17 @@ public class CommandController extends Observable {
 
 			CommandResult result = ci.execute(cmdArray);
 
-			// Test if the result object is a train
+			// Get the instance of the result object from the command
 			if (result.getObject() instanceof Train) {
 				dm.addTrain((Train) result.getObject());
 			} else if (result.getObject() instanceof Wagon) {
 				dm.addWagon((Wagon) result.getObject());
+			} else if(result.getObject() instanceof GraphicDisplay){
+				// Register display at commandcontroller
+				this.addObserver((GraphicDisplay) result.getObject());
+			} else if(result.getObject() instanceof TextLog){
+				// Register display at commandcontroller
+				this.addObserver((TextLog) result.getObject());
 			}
 			// Notify observers that there is a change
 			stateChanged();

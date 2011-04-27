@@ -12,7 +12,7 @@ import controller.output.TextLog;
 
 public class UiController implements ActionListener {
 	private RichRailJFrame jframe;
-	private CommandController tc;
+	private CommandController cc;
 
 	/**
 	 * GuiController controller.
@@ -21,15 +21,15 @@ public class UiController implements ActionListener {
 		// Create new jframe
 		jframe = new RichRailJFrame(this);
 		// Create the traincontroller
-		tc = new CommandController();
+		cc = new CommandController();
 
 		// Create the default display for the gui
 		GraphicDisplay graphicDisplay = new GraphicDisplay();
 		TextLog textlog = new TextLog();
 
 		// Add the differtent displays to the observerable.
-		tc.addObserver(graphicDisplay);
-		tc.addObserver(textlog);
+		cc.addObserver(graphicDisplay);
+		cc.addObserver(textlog);
 
 		// Start the GUI
 		jframe.initGUI();
@@ -40,15 +40,15 @@ public class UiController implements ActionListener {
 
 		// TODO weghalen, dit is ene test:
 		try {
-			tc.parseCommand("new train tr1");
-			tc.parseCommand("new train tr2");
-			tc.parseCommand("new wagon wg1");
-			tc.parseCommand("new wagon wg2");
-			tc.parseCommand("new wagon wg3");
+			cc.parseCommand("new train tr1");
+			cc.parseCommand("new train tr2");
+			cc.parseCommand("new wagon wg1");
+			cc.parseCommand("new wagon wg2");
+			cc.parseCommand("new wagon wg3");
 
-			tc.parseCommand("add wg1 to tr1");
-			tc.parseCommand("add wg2 to tr1");
-			tc.parseCommand("add wg3 to tr1");
+			cc.parseCommand("add wg1 to tr1");
+			cc.parseCommand("add wg2 to tr1");
+			cc.parseCommand("add wg3 to tr1");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -68,7 +68,7 @@ public class UiController implements ActionListener {
 
 			String cmd = jframe.getjTextFieldCmd().getText();
 			try {
-				String resultMessage = tc.parseCommand(cmd);
+				String resultMessage = cc.parseCommand(cmd);
 				appendToOutputLog(resultMessage);
 
 				jframe.getjTextFieldCmd().setText("");
@@ -78,21 +78,12 @@ public class UiController implements ActionListener {
 			}
 		} else if (arg0.getSource() == jframe.jButtonDuplicate) {
 			System.out.println("GuiController.actionPerformed() - Duplicate view");
-
-			// Create new jframe
-			PopUpJFrame popup = new PopUpJFrame();
-			// Create new display
-			GraphicDisplay newDisplay = new GraphicDisplay();
-			// Register display at traincontroller
-			tc.addObserver(newDisplay);
-
-			// Start the GUI
-			popup.initGUI();
-			// Set the display in the new jframe
-			popup.setDisplay(newDisplay);
-
-			// Perform an update from observerable
-			tc.stateChanged();
+			try {
+			cc.parseCommand("display graphicdisplay");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
