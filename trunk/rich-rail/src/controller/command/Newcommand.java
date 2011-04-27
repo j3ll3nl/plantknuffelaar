@@ -9,7 +9,7 @@ import model.Wagon;
 public class Newcommand implements CommandInterface {
 
 	private CommandResult cresult = new CommandResult();
-	private Depot dm;;
+	private Depot dm;
 
 	public Newcommand(Depot dm) {
 		this.dm = dm;
