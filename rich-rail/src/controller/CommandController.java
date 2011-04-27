@@ -3,8 +3,6 @@ package controller;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.JPanel;
-
 import model.Depot;
 import model.Train;
 import model.Wagon;
@@ -16,8 +14,6 @@ import controller.command.Displaycommand;
 import controller.command.Getcommand;
 import controller.command.Newcommand;
 import controller.command.Remcommand;
-import controller.output.GraphicDisplay;
-import controller.output.TextLog;
 
 public class CommandController extends Observable {
 
@@ -70,11 +66,11 @@ public class CommandController extends Observable {
 				ci = new Remcommand(dm);
 			} else if (cmdArray[0].equals("display")) {
 				System.out.println("CommandController.parseCommand(" + cmd + ") : display");
-				
+
 				System.out.println("GuiController.actionPerformed() - Duplicate display");
-				
+
 				ci = new Displaycommand();
-			
+
 			} else {
 				// The exception that the command cannot be resolved
 				throw new Exception("Command cannot be resolved!");
@@ -87,7 +83,7 @@ public class CommandController extends Observable {
 				dm.addTrain((Train) result.getObject());
 			} else if (result.getObject() instanceof Wagon) {
 				dm.addWagon((Wagon) result.getObject());
-			} else if(result.getObject() instanceof Observer){
+			} else if (result.getObject() instanceof Observer) {
 				// Register display at commandcontroller
 				this.addObserver((Observer) result.getObject());
 			}
