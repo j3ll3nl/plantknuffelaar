@@ -3,9 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JOptionPane;
 import view.RichRailJFrame;
 import controller.output.GraphicDisplay;
+import controller.output.MessageLog;
 import controller.output.TextLog;
 
 public class UiController implements ActionListener {
@@ -24,10 +24,14 @@ public class UiController implements ActionListener {
 		// Create the default display for the gui
 		GraphicDisplay graphicDisplay = new GraphicDisplay();
 		TextLog textlog = new TextLog();
+		MessageLog messagelog = new MessageLog();
 
-		// Add the differtent displays to the observerable.
+		// Add the different displays to the observerable.
 		cc.addObserver(graphicDisplay);
 		cc.addObserver(textlog);
+		
+		// Add the different logs to the observable
+		cc.addObserver(messagelog);
 
 		// Start the GUI
 		jframe.initGUI();
@@ -35,28 +39,21 @@ public class UiController implements ActionListener {
 		// Set the outputs
 		jframe.setGraphicDisplay(graphicDisplay);
 		jframe.setTextOutput(textlog);
+		
+		// Set the logdisplay
+		jframe.setMessageLog(messagelog);
 
 		// TODO weghalen, dit is ene test:
-		try {
-			cc.parseCommand("new train tr1");
-			cc.parseCommand("new train tr2");
-			cc.parseCommand("new wagon wg1");
-			cc.parseCommand("new wagon wg2");
-			cc.parseCommand("new wagon wg3");
+		cc.parseCommand("new train tr1");
+		cc.parseCommand("new train tr2");
+		cc.parseCommand("new wagon wg1");
+		cc.parseCommand("new wagon wg2");
+		cc.parseCommand("new wagon wg3");
 
-			cc.parseCommand("add wg1 to tr1");
-			cc.parseCommand("add wg2 to tr1");
-			cc.parseCommand("add wg3 to tr1");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+		cc.parseCommand("add wg1 to tr1");
+		cc.parseCommand("add wg2 to tr1");
+		cc.parseCommand("add wg3 to tr1");
 
-	public void appendToOutputLog(String message) {
-		StringBuffer sb = new StringBuffer(jframe.getjTextAreaLog().getText());
-		sb.append(message + "\n");
-		jframe.getjTextAreaLog().setText(sb.toString());
 	}
 
 	@Override
@@ -65,31 +62,16 @@ public class UiController implements ActionListener {
 			System.out.println("GuiController.actionPerformed() - Execute command");
 
 			String cmd = jframe.getjTextFieldCmd().getText();
-			try {
-				String resultMessage = cc.parseCommand(cmd);
-				appendToOutputLog(resultMessage);
+			cc.parseCommand(cmd);
 
-				jframe.getjTextFieldCmd().setText("");
-			} catch (Exception e) {
-				appendToOutputLog(e.getMessage());
-				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
 		} else if (arg0.getSource() == jframe.jButtonDuplicateGraphic) {
 			System.out.println("GuiController.actionPerformed() - Duplicate graphic view");
-			try {
-				cc.parseCommand("display graphicdisplay");
-			} catch (Exception e) {
-				appendToOutputLog(e.getMessage());
-				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
+			cc.parseCommand("display graphicdisplay");
+
 		} else if (arg0.getSource() == jframe.jButtonDuplicateText) {
 			System.out.println("GuiController.actionPerformed() - Duplicate text view");
-			try {
-				cc.parseCommand("display textlog");
-			} catch (Exception e) {
-				appendToOutputLog(e.getMessage());
-				JOptionPane.showMessageDialog(jframe, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-			}
+			cc.parseCommand("display textlog");
+
 		} else {
 			System.out.println("GuiController.actionPerformed() - Unknown button is pressed");
 		}

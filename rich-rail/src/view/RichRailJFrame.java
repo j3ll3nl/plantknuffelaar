@@ -18,6 +18,7 @@ import javax.swing.WindowConstants;
 
 import controller.UiController;
 import controller.output.GraphicDisplay;
+import controller.output.MessageLog;
 import controller.output.TextLog;
 
 /**
@@ -149,10 +150,6 @@ public class RichRailJFrame extends javax.swing.JFrame {
 								{
 									jTextAreaLog = new JTextArea();
 									jScrollPane2.setViewportView(jTextAreaLog);
-									jTextAreaLog.setForeground(new java.awt.Color(255, 255, 255));
-									jTextAreaLog.setBackground(new java.awt.Color(0, 0, 0));
-									jTextAreaLog.setEditable(false);
-									jTextAreaLog.setFont(new java.awt.Font("Tahoma", 0, 11));
 								}
 							}
 						}
@@ -222,5 +219,9 @@ public class RichRailJFrame extends javax.swing.JFrame {
 
 	public void setTextOutput(TextLog textlog) {
 		jScrollPane1.setViewportView(textlog);
+	}
+	
+	public void setMessageLog(MessageLog messagelog) {
+		jScrollPane2.setViewportView(messagelog);
 	}
 }

@@ -34,9 +34,10 @@ public class GraphicDisplay extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println("GraphicDisplay.update(" + o + ", " + arg + ")");
-
-		if (arg instanceof Depot) {
-			trains = ((Depot) arg).getTrains();
+		
+		Object[] args = (Object[])arg;
+		if (args[0] instanceof Depot) {
+			trains = ((Depot) args[0]).getTrains();
 			repaint();
 		}
 	}
