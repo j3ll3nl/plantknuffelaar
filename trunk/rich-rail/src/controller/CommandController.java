@@ -32,15 +32,15 @@ public class CommandController extends Observable {
 	 * @return Result message
 	 * @throws Exception Any errors that occure
 	 */
-	public void parseCommand(String cmd){
-		try{	
+	public void parseCommand(String cmd) {
+		try {
 			if (cmd.trim().equals("")) {
 				throw new Exception("No command is given!");
 			} else {
-				
+
 				// Split the command from whitespaces.
 				String[] cmdSplit = cmd.trim().split(" ");
-	
+
 				String[] cmdArray = new String[20];
 				for (int i = 0; i < cmdSplit.length; i++) {
 					cmdArray[i] = cmdSplit[i];
@@ -50,7 +50,7 @@ public class CommandController extends Observable {
 						cmdArray[i] = "";
 					}
 				}
-	
+
 				// Test if the command starts with any of the available commands. Throws an exception if the command cannot be executed.
 				if (cmdArray[0].equals("new")) {
 					System.out.println("CommandController.parseCommand(" + cmd + ") : new");
@@ -69,16 +69,16 @@ public class CommandController extends Observable {
 					ci = new Remcommand(dm);
 				} else if (cmdArray[0].equals("display")) {
 					System.out.println("CommandController.parseCommand(" + cmd + ") : display");
-	
+
 					System.out.println("GuiController.actionPerformed() - Duplicate display");
-	
+
 					ci = new Displaycommand();
-	
+
 				} else {
 					// The exception that the command cannot be resolved
 					throw new Exception("Command cannot be resolved!");
 				}
-	
+
 				CommandResult result = ci.execute(cmdArray);
 				// Get the instance of the result object from the command
 				if (result.getObject() instanceof Train) {
@@ -89,28 +89,28 @@ public class CommandController extends Observable {
 					// Register display at commandcontroller
 					this.addObserver((Observer) result.getObject());
 				}
-			
+
 				// Return the result message
 				throw new Exception(result.getMessage());
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			appendToOutputLog(e.getMessage());
-			
+
 			// Notify observers that there is a change
 			stateChanged();
 		}
 	}
-	
+
 	private void appendToOutputLog(String message) {
 		log += message + "\n";
 	}
-	
+
 	/**
 	 * This method notifies the observers that there is an change.
 	 */
 	private void stateChanged() {
 		setChanged();
-		Object[] args = {dm,log};
+		Object[] args = { dm, log };
 		notifyObservers(args);
 	}
 }

@@ -220,7 +220,7 @@ public class RichRailJFrame extends javax.swing.JFrame {
 	public void setTextOutput(TextLog textlog) {
 		jScrollPane1.setViewportView(textlog);
 	}
-	
+
 	public void setMessageLog(MessageLog messagelog) {
 		jScrollPane2.setViewportView(messagelog);
 	}
