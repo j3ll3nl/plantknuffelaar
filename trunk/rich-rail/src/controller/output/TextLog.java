@@ -26,9 +26,10 @@ public class TextLog extends JTextArea implements Observer {
 	public void update(Observable o, Object arg) {
 		System.out.println("TextLog.update(" + o + ", " + arg + ")");
 
-		if (arg instanceof Depot) {
-			trains = ((Depot) arg).getTrains();
-			wagons = ((Depot) arg).getWagons();
+		Object[] args = (Object[])arg;
+		if (args[0] instanceof Depot) {
+			trains = ((Depot) args[0]).getTrains();
+			wagons = ((Depot) args[0]).getWagons();
 
 			StringBuffer sb = new StringBuffer("");
 			if (wagons != null && !wagons.isEmpty()) {
