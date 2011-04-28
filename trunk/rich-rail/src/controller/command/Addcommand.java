@@ -33,7 +33,7 @@ public class Addcommand implements CommandInterface {
 			Train t = dm.getTrain(cmd[3]);
 
 			if (w == null || t == null) {
-				throw new Exception("train \"" + cmd[1] + "\" or wagon \"" + cmd[3] + "\" does not exist or is already connected!");
+				throw new Exception("wagon \"" + cmd[1] + "\" or train \"" + cmd[3] + "\" does not exist or is already connected!");
 			} else {
 				t.addWagon(w);
 				dm.deleteWagonFromDepot(w);
