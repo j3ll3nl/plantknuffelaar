@@ -9,7 +9,6 @@ public class MessageLog extends JTextArea implements Observer {
 
 	private static final long serialVersionUID = 7251401618317921382L;
 
-	
 	public MessageLog() {
 		super();
 		setEditable(false);
@@ -18,14 +17,14 @@ public class MessageLog extends JTextArea implements Observer {
 		setEditable(false);
 		setFont(new java.awt.Font("Tahoma", 0, 11));
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println("MessageLog.update(" + o + ", " + arg + ")");
-		
-		Object[] args = (Object[])arg;
+
+		Object[] args = (Object[]) arg;
 		if (args[1] instanceof String) {
-			setText((String)args[1]);
+			setText((String) args[1]);
 		}
 	}
 

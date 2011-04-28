@@ -29,7 +29,7 @@ public class UiController implements ActionListener {
 		// Add the different displays to the observerable.
 		cc.addObserver(graphicDisplay);
 		cc.addObserver(textlog);
-		
+
 		// Add the different logs to the observable
 		cc.addObserver(messagelog);
 
@@ -39,7 +39,7 @@ public class UiController implements ActionListener {
 		// Set the outputs
 		jframe.setGraphicDisplay(graphicDisplay);
 		jframe.setTextOutput(textlog);
-		
+
 		// Set the logdisplay
 		jframe.setMessageLog(messagelog);
 
