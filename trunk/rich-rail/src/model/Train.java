@@ -7,7 +7,7 @@ public class Train {
 	private HashSet<Wagon> wagons = new HashSet<Wagon>();
 
 	/**
-	 * Contructor for this class.
+	 * Constructor for this class.
 	 * 
 	 * @param id Train ID.
 	 */
