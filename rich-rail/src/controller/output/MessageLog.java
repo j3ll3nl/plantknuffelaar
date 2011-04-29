@@ -8,6 +8,7 @@ import javax.swing.JTextArea;
 public class MessageLog extends JTextArea implements Observer {
 
 	private static final long serialVersionUID = 7251401618317921382L;
+	private String log;
 
 	public MessageLog() {
 		super();
@@ -24,7 +25,8 @@ public class MessageLog extends JTextArea implements Observer {
 
 		Object[] args = (Object[]) arg;
 		if (args[1] instanceof String) {
-			setText((String) args[1]);
+			log = (String) args[1];
+			setText(log);
 		}
 	}
 
